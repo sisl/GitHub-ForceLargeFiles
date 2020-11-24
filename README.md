@@ -3,7 +3,7 @@
 This package is a simple work around for pushing large files to a GitHub repo.
 
 
-Since GitHub only allows pushing files upto 100 MB, a different service (such as [LFS](https://git-lfs.github.com/)) has to be used for larger files. This package compresses and splits large files that can be pushed to a GitHub repo without LFS. 
+Since GitHub only allows pushing files up to 100 MB, a different service (such as [LFS](https://git-lfs.github.com/)) has to be used for larger files. This package compresses and splits large files that can be pushed to a GitHub repo without LFS. 
 
 It starts off a root directory and traverses down subdirectories, and scans every file contained. If any file has a size that is above `threshold_size`, then they are compressed and split to multiple archives, each having a maximum size of `partition_size`. Compressing/Splitting works for any file extension. 
 
@@ -11,14 +11,14 @@ After compression/split, files can be pushed the usual way, using `git push`.
 
 ## Requirements
 - You need to have 7z installed. Visit the [7z Download](https://www.7-zip.org/download.html) page for more information.
-- Folders/Files in the traversed directories should have appropiate read/write permissions.
+- Folders/Files in the traversed directories should have appropriate read/write permissions.
 
 
 ## Example Usage
 Run with the default parameters:
 
 ```
-$ python main.py  --root_dir ~/MyFolder
+$ python src/main.py  --root_dir ~/MyFolder
 ```
 which will traverse down every subdirectory starting from `~/MyFolder`, and reduce all files over 100 MB to smaller archives with maximum size of approximately 95 MB. The default option is to delete the original (large) files afterwards, but this can be turned off.
 
