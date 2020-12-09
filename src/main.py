@@ -50,9 +50,9 @@ def traverse_root_dir(args):
 
             if is_over_threshold(f_full_dir, args):
                 f_full_dir_noext, ext = os.path.splitext(f_full_dir)
-                subprocess.run(["7z", "-v" + str(args.partition_size) + args.partition_size_unit, args.cmds_into_7z, f_full_dir_noext + "." + ext[1:] + "." + args.partition_ext, f_full_dir])
+                prc = subprocess.run(["7z", "-v" + str(args.partition_size) + args.partition_size_unit, args.cmds_into_7z, f_full_dir_noext + "." + ext[1:] + "." + args.partition_ext, f_full_dir])
                 
-                if args.delete_original:
+                if args.delete_original and prc.returncode == 0:
                     os.remove(f_full_dir) 
 
 
