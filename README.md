@@ -9,6 +9,12 @@ It starts off at a root directory and traverses down subdirectories, and scans e
 
 After compression/split, files can be pushed the usual way, using `git push`.
 
+
+## Parallelization
+- Traversing directories in `src/main.py` is serial, but compressing/splitting each file is parallelized by default.
+- Reversing with `src/reverse.py` is entirely serial.
+
+
 ## Requirements
 - You need to have 7z installed. Visit the [7z Download](https://www.7-zip.org/download.html) page for more information.
 - Folders/Files in the traversed directories should have appropriate read/write permissions.
