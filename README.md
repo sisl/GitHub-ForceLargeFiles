@@ -11,11 +11,12 @@ After compression/split, files can be pushed the usual way, using `git push`.
 
 
 ## Parallelization
-- Traversing directories in `src/main.py` is serial, but compressing/splitting each file is parallelized by default.
-- Reversing with `src/reverse.py` is entirely serial.
+- Although traversing directories in `src/main.py` is serial, compressing/splitting each file through 7z is parallelized by default.
+- Reversing with `src/reverse.py` is entirely serial. (TODO: Parallelize this too)
 
 
 ## Requirements
+- Python 3.x.x. 
 - You need to have 7z installed. Visit the [7z Download](https://www.7-zip.org/download.html) page for more information.
 - Folders/Files in the traversed directories should have appropriate read/write permissions.
 
@@ -24,7 +25,7 @@ After compression/split, files can be pushed the usual way, using `git push`.
 Run with the default parameters:
 
 ```
-$ python src/main.py  --root_dir ~/MyFolder
+$ python3 src/main.py  --root_dir ~/MyFolder
 ```
 which will traverse down every subdirectory starting from `~/MyFolder`, and reduce all files over 100 MB to smaller archives with maximum size of approximately 95 MB. The default option is to delete the original (large) files afterwards, but this can be turned off.
 
@@ -78,5 +79,5 @@ $ tree --du -h ~/MyFolder
 ```
 To revert back to the original files, run:
 ```
-$ python src/reverse.py  --root_dir ~/MyFolder
+$ python3 src/reverse.py  --root_dir ~/MyFolder
 ``` 
