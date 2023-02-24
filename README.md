@@ -9,6 +9,7 @@ It starts off at a root directory and traverses down subdirectories, and scans e
 
 After compression/split, files can be pushed the usual way, using `git push`.
 
+GitHub has another restriction that it only allows pushing up to 2 GB for one time. The new version add a function (git_commit) that it can automatically add and commit files in batch. So every commit is under 2 GB. Then it can be uploaded by the included `git-batch-push.sh` batch. As long as you don't reach GitHub repo's max size limit 100 GB you are fine.
 
 ## Parallelization
 - Although traversing directories in `src/main.py` is serial, compressing/splitting each file through 7z is parallelized by default.
@@ -22,10 +23,10 @@ After compression/split, files can be pushed the usual way, using `git push`.
 
 
 ## Example Usage
-Run with the default parameters:
+Run with the default parameters: (It's recommend to use absolute path for git add and commit)
 
 ```
-$ python3 src/main.py  --root_dir ~/MyFolder
+$ python3 src/main.py  --root_dir "C:\MyFolder\" --git_commit True
 ```
 which will traverse down every subdirectory starting from `~/MyFolder`, and reduce all files over 100 MB to smaller archives with maximum size of approximately 95 MB. The default option is to delete the original (large) files afterwards, but this can be turned off.
 
