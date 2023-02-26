@@ -9,7 +9,8 @@ import git
 def parse_arguments():
     parser = argparse.ArgumentParser(description='GitHub-ForceLargeFiles')
 
-    parser.add_argument('--root_dir', type=str, default=os.getcwd(), help="Root directory to start traversing. Defaults to current working directory.")
+    parser.add_argument('--root_dir', type=str, default=os.getcwd(),
+                        help="Root directory to start traversing. Defaults to current working directory.")
     parser.add_argument('--delete_original', type=bool, default=True,
                         help="Do you want to delete the original (large) file after compressing to archives?")
     parser.add_argument('--git_commit', type=bool, default=False,
@@ -103,8 +104,7 @@ def traverse_root_dir_and_git(args):
                     size_count = 0
                     git_add_list = []
 
-
-        git_commit(repo, count, git_add_list)
+        git_commit(repo, count + 1, git_add_list)
 
 
 def git_commit(repo, count, git_add_list):
