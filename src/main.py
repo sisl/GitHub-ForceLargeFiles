@@ -39,6 +39,10 @@ def parse_arguments():
     parser.add_argument('--git_size_unit', type=str, default='m', choices=[
                         'b', 'k', 'm', 'g'], help="Unit of the git size specified (bytes, kilobytes, megabytes, gigabytes).")
 
+    # The argument below default to ignore .git folder.
+    parser.add_argument('--ignore_git_folder', type=bool, default=True,
+                        help="Ignore .git folder when splitting files.")
+
     args = parser.parse_args()
     return args
 
@@ -72,10 +76,12 @@ def is_over_threshold_git(size_count, args):
 
 
 def traverse_root_dir(args):
-    for root, _, files in os.walk(args.root_dir):
+    exclude = set(['.git'])
+    for root, dirs, files in os.walk(args.root_dir):
+        if args.ignore_git_folder:
+            dirs[:] = [d for d in dirs if d not in exclude]
         for f in files:
             f_full_dir = os.path.join(root, f)
-
             if is_over_threshold(f_full_dir, args):
                 f_full_dir_noext, ext = os.path.splitext(f_full_dir)
                 prc = subprocess.run(["7z", "-v" + str(args.partition_size) + args.partition_size_unit,
@@ -91,7 +97,10 @@ def traverse_root_dir_and_git(args):
         count = 0
         size_count = 0
         git_add_list = []
-        for root, _, files in os.walk(args.root_dir):
+        exclude = set(['.git'])
+        for root, dirs, files in os.walk(args.root_dir):
+            if args.ignore_git_folder:
+                dirs[:] = [d for d in dirs if d not in exclude]
             for f in files:
                 f_full_dir = os.path.join(root, f)
 
